@@ -1,0 +1,35 @@
+# PRODIGY_DS_2
+
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+titanic_df = pd.read_csv("Titanic-Dataset.csv")
+titanic_df['Age'].fillna(titanic_df['Age'].median(), inplace=True)
+titanic_df['HasCabin'] = titanic_df['Cabin'].notna().astype(int)
+titanic_df.drop(columns=['Cabin'], inplace=True)
+titanic_df['Embarked'].fillna(titanic_df['Embarked'].mode()[0], inplace=True)
+plt.figure(figsize=(8, 6))
+sns.countplot(x='Survived', data=titanic_df)
+plt.title('Distribution of Survival Rate')
+plt.xlabel('Survived')
+plt.ylabel('Count')
+plt.show()
+plt.figure(figsize=(8, 6))
+sns.countplot(x='Pclass', hue='Survived', data=titanic_df)
+plt.title('Survival Rate by Class')
+plt.xlabel('Passenger Class')
+plt.ylabel('Count')
+plt.show()
+plt.figure(figsize=(8, 6))
+sns.countplot(x='Sex', hue='Survived', data=titanic_df)
+plt.title('Survival Rate by Gender')
+plt.xlabel('Gender')
+plt.ylabel('Count')
+plt.show()
+plt.figure(figsize=(10, 6))
+sns.histplot(titanic_df['Age'], kde=True, bins=30)
+plt.title('Age Distribution of Passengers')
+plt.xlabel('Age')
+plt.ylabel('Frequency')
+plt.show()
